@@ -1,0 +1,18 @@
+
+@import '~@angular/material/theming';
+$primary: mat-palette($mat-indigo);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+
+#recentitems {
+  display:block;
+  background-color: #aaaa;
+  margin: 2px;
+  border-right-width: 1px;
+  border-style: solid;
+}
+
+#recentitem {
+
+  display: inline;
+    
+}

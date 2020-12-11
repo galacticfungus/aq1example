@@ -1,0 +1,12 @@
+<div [ngSwitch]="isString()">
+    <p *ngSwitchCase="true">{{recentAverage}}</p>
+
+    <div *ngSwitchCase="false">
+        <p *ngIf="getAverageData().movement > 0; then positiveBlock else negativeBlock"></p>
+
+        <ng-template #positiveBlock>Moving Average: Current average is {{getAverageData().average}}, up
+            {{getAverageData().movement}} points</ng-template>
+        <ng-template #negativeBlock>Moving Average: Current average is {{getAverageData().average}}, down
+            {{getAverageData().movement}} points</ng-template>
+    </div>
+</div>
