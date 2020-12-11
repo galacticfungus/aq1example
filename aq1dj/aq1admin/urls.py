@@ -25,6 +25,3 @@ urlpatterns = [
     url(r'^api/add', views.add_server),
     url(r'^.*', TemplateView.as_view(template_name="home.html"), name="home")
 ]
-
-
-# url(r'^emp_detail/(?P<user_name>\w+)/(?P<mobile_number>\d{10,18})/$', views.emp_detail, name='emp_detail'),
