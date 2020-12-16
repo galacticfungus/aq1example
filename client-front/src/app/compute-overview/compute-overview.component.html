@@ -1,0 +1,6 @@
+<div [ngSwitch]="isComputeReady()">
+  <app-compute *ngSwitchCase="true"></app-compute>
+  <div *ngSwitchCase="false">
+    <p>Compute not ready</p>
+  </div>
+</div>

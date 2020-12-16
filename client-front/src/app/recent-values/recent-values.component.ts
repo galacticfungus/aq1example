@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RealtimeDataService, ValueData } from '../realtime-data.service';
+import { RealtimeDataService, ValuePayload } from '../realtime-data.service';
 import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
@@ -18,19 +18,17 @@ export class RecentValuesComponent implements OnInit {
     this.dataRecieved = this.dataRecieved.bind(this);
     this.dataService.registerForValues(this.dataRecieved);
   }
-
+  // Adds a value to the list of numbers and removes the oldest one
   addNumber(value: number) {
     // Basic Queue
     this.recentValues.unshift(value);
     if (this.recentValues.length > 10) {
       this.recentValues.pop();
     }
-    console.log("Current values: ", this.recentValues);
   }
-
-  dataRecieved(data: ValueData) {
+  // Callback that recices the latest value
+  dataRecieved(data: ValuePayload) {
     // data is json
-    console.log("Recieved value: ", data,", Value is ", data.value);
     this.addNumber(data.value);
   }
 

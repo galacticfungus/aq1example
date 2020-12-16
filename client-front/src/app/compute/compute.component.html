@@ -1,0 +1,38 @@
+<div class="row justify-content-md-center">
+  <table class="table .table-borderless w-auto">
+    <tbody>
+      <tr *ngFor="let row of identMatrix; index as i">
+        <td class="col-2">{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+  <p class="display-3">&#215;</p>
+  </div>
+  <table class="table .table-borderless w-auto">
+    <tbody>
+      <tr *ngFor="let row of matrix; index as i">
+        <td >{{ row[0] }}</td>
+        <td >{{ row[1] }}</td>
+        <td >{{ row[2] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div><p class="display-3">=</p></div>
+  <table *ngIf="hasResult" class="table .table-borderless w-auto">
+    <tbody>
+      <tr *ngFor="let row of answer; index as i">
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+</div>
+<div class="row">
+<Button type="button" class="btn btn-primary" (click)="computeResult()">Request Answer</Button>
+</div>

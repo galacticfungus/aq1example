@@ -1,34 +1,38 @@
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-export interface ValueData {
+export interface ValuePayload {
   value: number,
 }
 
-export interface AverageData {
+export interface AveragePayload {
   average: number,
   movement: number,
 }
 
 interface RealtimeData {
   type: string,
-  payload: ValueData | AverageData,
+  payload: ValuePayload | AveragePayload,
 }
 
-export interface AverageCallback { (data: AverageData): void }
-export interface ValueCallback { (data: ValueData): void }
+export interface AverageCallback { (data: AveragePayload): void }
+export interface ValueCallback { (data: ValuePayload): void }
 
 @Injectable({
   providedIn: 'root'
 })
 export class RealtimeDataService {
 
-  myWebSocket: WebSocketSubject<RealtimeData> = webSocket('ws://localhost:9010');
+  myWebSocket: WebSocketSubject<RealtimeData>; 
   isRecieving: boolean = false;
   recievedAverage: AverageCallback;
   recievedValue: ValueCallback;
   constructor() {
-    // Default the callbacks to do nothing
+    this.myWebSocket = webSocket('ws://localhost:9010');
+    
+    this.registerForAverages = this.registerForAverages.bind(this);
+    this.registerForValues = this.registerForValues.bind(this);
+    // Default the callbacks to do nothing - this should be an array of callbacks
     this.recievedAverage = () => { };
     this.recievedValue = () => { };
     this.connectToServer();
@@ -45,16 +49,13 @@ export class RealtimeDataService {
   connectToServer() {
     console.log('Initiating real time connection');
     this.myWebSocket.subscribe(
-      data => {
+      response => {
         // If the data is an average then call recievedAverage with the data
         // Otherwise call recievedValue with the data
-        console.log('Raw Data: ', data);
-        if (data.type == "avg") {
-          this.recievedAverage(data.payload as AverageData);
-
+        if (response.type == "avg") {
+          this.recievedAverage(response.payload as AveragePayload);
         } else {
-          console.log('Value payload: ', data.payload);
-          this.recievedValue(data.payload as ValueData);
+          this.recievedValue(response.payload as ValuePayload);
         }
       },
       err => console.log(err),

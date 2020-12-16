@@ -10,13 +10,17 @@ import { CookieService } from 'ngx-cookie-service';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDivider, MatDividerModule} from '@angular/material/divider';
+import { ComputeOverviewComponent } from './compute-overview/compute-overview.component';
+import { ComputeComponent } from './compute/compute.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MovingAverageComponent,
     RecentValuesComponent,
-    ServerDataComponent
+    ServerDataComponent,
+    ComputeOverviewComponent,
+    ComputeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,40 @@
 <div [ngSwitch]="isString()">
-    <p *ngSwitchCase="true">{{recentAverage}}</p>
+  <p class="text-muted" *ngSwitchCase="true">{{ recentAverage }}</p>
 
-    <div *ngSwitchCase="false">
-        <p *ngIf="getAverageData().movement > 0; then positiveBlock else negativeBlock"></p>
+  <div *ngSwitchCase="false">
+    <p *ngIf="getMovement() > 0; then positiveBlock; else negativeBlock"></p>
 
-        <ng-template #positiveBlock>Moving Average: Current average is {{getAverageData().average}}, up
-            {{getAverageData().movement}} points</ng-template>
-        <ng-template #negativeBlock>Moving Average: Current average is {{getAverageData().average}}, down
-            {{getAverageData().movement}} points</ng-template>
-    </div>
+    <ng-template #positiveBlock>
+      <div class="card-group">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Average</h5>
+            <p class="card-text">{{ getAverage() }}</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Movement</h5>
+            <p class="card-text">{{ getMovement() | number: "1.2-2" }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #negativeBlock>
+      <div class="card-group">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Average</h5>
+            <p class="card-text">{{ getAverage() }}</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Movement</h5>
+            <p class="card-text">{{ getMovement() | number: "1.2-2" }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
 </div>
