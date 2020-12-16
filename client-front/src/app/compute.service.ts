@@ -19,7 +19,7 @@ class ComputeRequest {
 }
 
 export interface ComputeResponse {
-  matrix: number[][],
+  solution: number[][],
 }
 
 @Injectable({
@@ -28,12 +28,12 @@ export interface ComputeResponse {
 export class ComputeService {
 
   notificationCallbacks: ComputeAvaiableCallback[] = [];
-  computePoller: NodeJS.Timeout;
+  //computePoller: NodeJS.Timeout;
   constructor(private http: HttpClient) {
     this.isComputeAvailable = this.isComputeAvailable.bind(this);
     this.notifyComputeReady = this.notifyComputeReady.bind(this);
     this.registerComputeNotification = this.registerComputeNotification.bind(this);
-    this.computePoller = setInterval(this.isComputeAvailable, 1000);
+    //this.computePoller = setInterval(this.isComputeAvailable, 1000);
   }
 
   isComputeAvailable() {
@@ -44,7 +44,7 @@ export class ComputeService {
       if (data.compute == true) {
         console.log('compute available')
         // Disable the polling
-        clearInterval(this.computePoller)
+        //clearInterval(this.computePoller)
         // Notify that compute is available
         this.notifyComputeReady();
       }

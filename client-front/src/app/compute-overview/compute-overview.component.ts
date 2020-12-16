@@ -13,7 +13,7 @@ export class ComputeOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.computeReady = this.computeReady.bind(this);
     this.isComputeReady = this.isComputeReady.bind(this);
-    this.compute.registerComputeNotification(this.computeReady);
+    // this.compute.registerComputeNotification(this.computeReady);
   }
 
   // Callback used to inform when compute is ready

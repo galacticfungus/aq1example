@@ -26,16 +26,12 @@ if (serverName[0] == null) {
   serverName = "unknownServer";
 }
 var port = parseInt(portString);
-console.log("Hosting on port: ", port);
 console.log("Connect on: http://localhost:", port);
 
-// TODO: Get the name of the server from the command line
-// Port cant be static needs to be set when starting
-// http://localhost:9000
-// ws://localhost:9010
+
 
 const wsport = port + 10;
-const computePort = null;
+
 const app = express();
 console.log(Aq1DataFeed);
 // Sets up the web socket and starts sending values and averages to any client
@@ -59,39 +55,14 @@ app.get("/api/servername", (req, res) => {
   res.send(JSON.stringify({ name: serverName }));
 });
 
-// Returns the current moving average
-app.get("/api/mva", (req, res) => {
-  res.send(JSON.stringify({ data: feed.getRecentAverage() }));
-});
-
-// Respond to compute post notifications and store the compute port
-app.post("/api/announce", (req, res) => {
-  console.log("Announce Req:", req.body);
-
-  app.set("computePort", req.body["port"]);
-  console.log("Compute on: ", app.get("computePort"));
-  // Compute at this point is ready
-  res.sendStatus(200);
-});
-
-app.get("/api/compute", (req, res) => {
-  if (app.get("computePort") == null) {
-    // Compute isn't ready so return that
-    res.send(JSON.stringify({ compute: false }));
-  } else {
-    // Compute is ready so the client can stop polling
-    res.send(JSON.stringify({ compute: true }));
-  }
-});
-
+// Send a request to the Django server to compute the dot product
 app.post("/api/compute", (req, res) => {
   data = req.body["data"];
-  console.log("Data being sent: ", data);
   axios.post('http://127.0.0.1:9999/api/compute', data)
   .then(result => {
-    console.log(`statusCode: ${result.statusCode}`)
-    console.log("Recieved: ", result.data);
+    // Send the result to the client
     res.send(result.data);
+    console.log('Result from NodeJS: ', result.data);
   })
   .catch(error => {
     console.error(error)
