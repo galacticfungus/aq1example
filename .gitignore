@@ -1,0 +1,5 @@
+/.vscode
+package-lock.json
+/admin-front/node_modules/
+/aq1node/node_modules/
+/client-front/node_modules/
